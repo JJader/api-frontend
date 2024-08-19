@@ -9,7 +9,7 @@ from fastapi import APIRouter
 def memoryview_to_bytes(mv):
     try:
         data = pickle.loads(mv.tobytes())
-    except:
+    except Exception:
         data = mv.tobytes().decode("unicode_escape").encode("latin1").decode("utf-8")
 
     return str(data)
