@@ -1,4 +1,5 @@
 fastapi
+python-multipart~=0.0.9
 uvicorn
 mongomock
 psycopg2-binary~=2.9.9
