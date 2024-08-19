@@ -24,7 +24,7 @@ async def get_load_tasks(
         data = {
             "data": file_content,
             "model_name": model.model_name,
-            "flavor": model.flavor,
+            "backend": model.flavor,
         }
 
         return (task_id, data)

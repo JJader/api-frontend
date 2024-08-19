@@ -16,4 +16,16 @@ async def read_load(model_name: str, flavor: str, file: UploadFile = File(...)):
         kwargs=data,
     )
 
-    return result.get()
+    return {"task_id": result.id}
+
+@router.get("/model/loads")
+async def read_task_load(task_id: str):
+
+    result = app.AsyncResult(task_id)
+    metadados  = {
+        "status": result.status,
+        "task_id": result.id,
+        "result":  result.result
+    }
+
+    return  metadados
