@@ -7,21 +7,13 @@ router = APIRouter()
 
 
 @router.post("/model/load")
-async def read_load(file: UploadFile = File(...)):
+async def read_load(model_name: str, flavor: str, file: UploadFile = File(...)):
 
-    task, file = get_load_tasks(file)
+    task, data = await get_load_tasks(model_name, flavor, file)
 
-    try:
-        file_content = await file.read()
+    result = app.send_task(
+        task,
+        kwargs=data,
+    )
 
-        data = {"data": file_content}
-
-        result = app.send_task(
-            task,
-            kwargs=data,
-        )
-
-        return result.get()
-    finally:
-
-        await file.close()
+    return result.get()
