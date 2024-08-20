@@ -1,20 +1,30 @@
 from typing import Tuple, Any
-from schemas import PredictSchema
 from fastapi import UploadFile
-from schemas import ModelSchema
+from schemas import ModelSchema, PredictSchema, ResultSchema
+from celery.result import AsyncResult
 
 
 def get_predict_tasks(request: dict) -> Tuple[str, Any]:
-    task_id = "app.mlflow.tasks.predict"
+    task_name = "app.mlflow.tasks.predict"
     payload = PredictSchema.model_validate(request)
 
-    return (task_id, payload.data)
+    return (task_name, payload.data)
+
+
+def get_load_result(request: AsyncResult) -> Tuple[str, Any]:
+    task_name = request.name
+    result = ResultSchema(
+        task_id=request.task_id, result=request.result, status=request.status
+    )
+
+    data = result.model_dump()
+    return (task_name, data)
 
 
 async def get_load_tasks(
     model_name: str, flavor: str, request: UploadFile
 ) -> Tuple[str, Any]:
-    task_id = "app.mlflow.tasks.load"
+    task_name = "app.mlflow.tasks.load"
 
     model = ModelSchema(model_name=model_name, flavor=flavor, model=request)
 
@@ -27,7 +37,7 @@ async def get_load_tasks(
             "backend": model.flavor,
         }
 
-        return (task_id, data)
+        return (task_name, data)
 
     finally:
 
