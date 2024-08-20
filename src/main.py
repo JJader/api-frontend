@@ -12,7 +12,7 @@ app = FastAPI()
 app.include_router(history.router)
 app.include_router(predict.router)
 app.include_router(load.router)
-app.add_exception_handler(Exception, global_exception_handler )
+app.add_exception_handler(Exception, global_exception_handler)
 
 
 if __name__ == "__main__":
