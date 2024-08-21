@@ -11,9 +11,13 @@ router = APIRouter()
 async def read_predict(payload: PredictSchema):
     task, data = get_predict_tasks(payload)
 
-    result = app.send_task(
+    predict_task = app.send_task(
         task,
         kwargs=data,
     )
 
-    return result.get()
+    result = {
+        "result": predict_task.get()
+    }
+
+    return result
