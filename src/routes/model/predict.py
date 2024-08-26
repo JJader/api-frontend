@@ -16,6 +16,8 @@ async def read_predict(payload: PredictSchema):
         kwargs=data,
     )
 
-    result = {"result": predict_task.get()}
+    predict = predict_task.get()
+
+    result = {"result": predict.get("result"), "metadata": predict.get("model")}
 
     return result
