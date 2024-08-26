@@ -1,0 +1,15 @@
+version: '3.5'
+
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      -  my-proxy-net
+networks:
+  my-proxy-net:
+    external:
+      name: custom_network
