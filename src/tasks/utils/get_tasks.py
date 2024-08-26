@@ -8,7 +8,7 @@ def get_predict_tasks(request: dict) -> Tuple[str, Any]:
     task_name = "app.mlflow.tasks.predict"
     payload = PredictSchema.model_validate(request)
     data = payload.model_dump()
-    
+
     return (task_name, data)
 
 

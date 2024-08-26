@@ -16,8 +16,6 @@ async def read_predict(payload: PredictSchema):
         kwargs=data,
     )
 
-    result = {
-        "result": predict_task.get()
-    }
+    result = {"result": predict_task.get()}
 
     return result

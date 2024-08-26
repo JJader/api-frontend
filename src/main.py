@@ -1,17 +1,18 @@
 from fastapi import FastAPI
-from fastapi import FastAPI
 
 import uvicorn
 
 
 from routes.model import history, predict, load
 from routes.system.exception_handler import global_exception_handler
+from routes.system import health
 
 app = FastAPI()
 
 app.include_router(history.router)
 app.include_router(predict.router)
 app.include_router(load.router)
+app.include_router(health.router)
 app.add_exception_handler(Exception, global_exception_handler)
 
 
