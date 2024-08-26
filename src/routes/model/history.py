@@ -34,7 +34,7 @@ def convert_to_json(data):
             }
         except Exception:
             new_item = {}
-            
+
         converted_data.append(new_item)
 
     return converted_data
@@ -57,11 +57,13 @@ async def read_history():
     cursor = conn.cursor(cursor_factory=RealDictCursor)
 
     try:
-        cursor.execute("""
+        cursor.execute(
+            """
             SELECT *
             FROM celery_taskmeta
             WHERE name = 'app.mlflow.tasks.predict'
-        """)
+        """
+        )
         json_result = convert_to_json(cursor.fetchall())
         return json_result
 
