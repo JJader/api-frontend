@@ -24,3 +24,7 @@ API com as rotas para servir o modelo
         * Endpoint onde deverá exibir o histórico de predições realizadas (o payload de entrada + as saídas preditas)
     * `/health/`
         * Endpoint que irá retornar a saúde da API
+
+# Arquitetura da aplicação
+
+![](docs/arquitetura.drawio.png)
